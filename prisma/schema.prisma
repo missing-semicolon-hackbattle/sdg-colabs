@@ -9,3 +9,46 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  type      PostType
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+  type      UserType
+}
+
+enum UserType {
+  INDIVIDUAL
+  GROUP
+  GOVERNMENT
+  NONPROFIT
+  ORGANIZATION
+}
+
+enum PostType {
+  ARTICLE
+  EVENT
+  JOB
+  NEWS
+  OPPORTUNITY
+  PROJECT
+  RESOURCE
+  SERVICE
+  VOLUNTEER
+  OTHER
+}

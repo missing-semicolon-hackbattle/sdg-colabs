@@ -11,14 +11,17 @@ datasource db {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
-  type      PostType
+  id         Int             @id @default(autoincrement())
+  title      String
+  content    String
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  author     User            @relation(fields: [authorId], references: [id])
+  authorId   Int
+  type       PostType
+  sdgs       SDG[]
+  References PostReference[]
+  Referenced PostReference[] @relation("Referrer")
 }
 
 model User {
@@ -51,4 +54,21 @@ enum PostType {
   SERVICE
   VOLUNTEER
   OTHER
+}
+
+model PostReference {
+  id          Int    @id @default(autoincrement())
+  post        Post   @relation("Referrer", fields: [postId], references: [id])
+  postId      Int
+  reference   Post   @relation(fields: [referenceId], references: [id])
+  referenceId Int
+  forwardRef  String
+  backwardRef String
+}
+
+model SDG {
+  id          Int    @id @default(autoincrement())
+  goal        String @unique
+  description String
+  Posts       Post[]
 }

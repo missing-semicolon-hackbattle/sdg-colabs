@@ -11,13 +11,13 @@ datasource db {
 }
 
 model Post {
-  id         Int             @id @default(autoincrement())
+  id         String          @id @default(uuid())
   title      String
   content    String
   createdAt  DateTime        @default(now())
   updatedAt  DateTime        @updatedAt
   author     User            @relation(fields: [authorId], references: [id])
-  authorId   Int
+  authorId   String
   type       PostType
   sdgs       SDG[]
   References PostReference[]
@@ -25,7 +25,7 @@ model Post {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   name      String
   email     String   @unique
   password  String
@@ -57,17 +57,17 @@ enum PostType {
 }
 
 model PostReference {
-  id          Int    @id @default(autoincrement())
+  id          String @id @default(uuid())
   post        Post   @relation("Referrer", fields: [postId], references: [id])
-  postId      Int
+  postId      String
   reference   Post   @relation(fields: [referenceId], references: [id])
-  referenceId Int
+  referenceId String
   forwardRef  String
   backwardRef String
 }
 
 model SDG {
-  id          Int    @id @default(autoincrement())
+  id          String @id @default(uuid())
   goal        String @unique
   description String
   Posts       Post[]

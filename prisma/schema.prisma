@@ -64,6 +64,7 @@ model PostReference {
 
 model SDG {
   id          String @id @default(uuid())
+  no          Int    @unique
   goal        String @unique
   description String
   Posts       Post[]

@@ -46,14 +46,10 @@ enum UserType {
 enum PostType {
   ARTICLE
   EVENT
-  JOB
   NEWS
   OPPORTUNITY
   PROJECT
-  RESOURCE
-  SERVICE
   VOLUNTEER
-  OTHER
 }
 
 model PostReference {
